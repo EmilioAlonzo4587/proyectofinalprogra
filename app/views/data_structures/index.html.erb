@@ -1,0 +1,86 @@
+<div class="max-w-7xl mx-auto">
+  <!-- Tabs Navigation -->
+  <div class="mb-8">
+    <div class="border-b border-gray-200 bg-white rounded-t-lg">
+      <nav class="-mb-px flex space-x-1 p-4">
+        <%= link_to data_structures_path(tab: 'linked_list'), 
+            class: "texto tab-button py-3 px-4 border-b-2 font-medium text-sm whitespace-nowrap rounded-t-lg transition-all
+                   #{@current_tab == 'linked_list' ? 'border-red-500 text-red-600 bg-red-50' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50'}" do %>
+          📋 Lista Enlazada
+        <% end %>
+        
+        <%= link_to data_structures_path(tab: 'doubly_linked_list'), 
+            class: "texto tab-button py-3 px-4 border-b-2 font-medium text-sm whitespace-nowrap rounded-t-lg transition-all
+                   #{@current_tab == 'doubly_linked_list' ? 'border-red-500 text-red-600 bg-red-50' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50'}" do %>
+          🔗 Lista Doble
+        <% end %>
+        
+        <%= link_to data_structures_path(tab: 'stack'), 
+            class: "texto tab-button py-3 px-4 border-b-2 font-medium text-sm whitespace-nowrap rounded-t-lg transition-all
+                   #{@current_tab == 'stack' ? 'border-red-500 text-red-600 bg-red-50' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50'}" do %>
+          📚 Pila (Stack)
+        <% end %>
+        
+        <%= link_to data_structures_path(tab: 'queue'), 
+            class: "texto tab-button py-3 px-4 border-b-2 font-medium text-sm whitespace-nowrap rounded-t-lg transition-all
+                   #{@current_tab == 'queue' ? 'border-red-500 text-red-600 bg-red-50' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50'}" do %>
+          🚶 Cola (Queue)
+        <% end %>
+        
+      <!-- <%= link_to data_structures_path(tab: 'binary_tree'), 
+           class: "texto tab-button py-3 px-4 border-b-2 font-medium text-sm whitespace-nowrap rounded-t-lg transition-all
+                   {@current_tab == 'binary_tree' ? 'border-red-500 text-red-600 bg-red-50' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50'}" do %>
+          🌳 Árbol Binario
+        <% end %> -->
+      </nav>
+    </div>
+  </div>
+
+  <!-- Tab Contents -->
+  <% if @current_tab == 'linked_list' %>
+    <%= render 'linked_list_tab' %>
+  <% elsif @current_tab == 'doubly_linked_list' %>
+    <%= render 'doubly_linked_list_tab' %>
+  <% elsif @current_tab == 'stack' %>
+    <%= render 'stack_tab' %>
+  <% elsif @current_tab == 'queue' %>
+    <%= render 'queue_tab' %>
+  <% elsif @current_tab == 'binary_tree' %>
+    <%= render 'binary_tree_tab' %>
+  <% end %>
+</div>
+
+<script>
+  function showTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.add('hidden');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.classList.remove('border-red-500', 'text-red-600', 'bg-red-50');
+      button.classList.add('border-transparent', 'text-gray-500', 'hover:bg-gray-50');
+    });
+    
+    // Show selected tab content
+    document.getElementById(tabName + '_content').classList.remove('hidden');
+    
+    // Add active class to selected tab
+    const activeTab = document.getElementById(tabName + '_tab');
+    activeTab.classList.remove('border-transparent', 'text-gray-500', 'hover:bg-gray-50');
+    activeTab.classList.add('border-red-500', 'text-red-600', 'bg-red-50');
+    
+    // Update URL without page reload
+    const url = new URL(window.location);
+    url.searchParams.set('tab', tabName);
+    window.history.pushState({}, '', url);
+  }
+  
+  // Set initial tab based on URL parameter
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab') || 'linked_list';
+    showTab(tab);
+  });
+</script>

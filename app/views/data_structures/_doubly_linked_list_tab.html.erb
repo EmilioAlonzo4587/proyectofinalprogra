@@ -1,0 +1,111 @@
+<div class="space-y-6">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+      🔗 Lista Doblemente Enlazada
+    </h2>
+    <p class="text-gray-600 mb-6">
+      Cada nodo tiene punteros al anterior y siguiente. Permite navegación bidireccional eficiente.
+    </p>
+    
+    <!-- Controls -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <%= form_with url: doubly_linked_list_action_path, method: :post, local: true, class: "flex items-center gap-2" do |f| %>
+        <%= f.number_field :value, placeholder: "Valor", class: "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 w-24", required: true %>
+        <%= f.hidden_field :action_type, value: "prepend" %>
+        <%= f.submit "➕ Inicio", class: "px-4 py-3 bg-blue-200 text-black rounded-md hover:bg-white-700 transition-colors text-sm font-medium" %>
+      <% end %>
+      
+      <%= form_with url: doubly_linked_list_action_path, method: :post, local: true, class: "flex items-center gap-2" do |f| %>
+        <%= f.number_field :value, placeholder: "Valor", class: "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 w-24", required: true %>
+        <%= f.hidden_field :action_type, value: "append" %>
+        <%= f.submit "➕ Final", class: "px-4 py-3 bg-green-300 text-black rounded-md hover:bg-white-700 transition-colors text-sm font-medium" %>
+      <% end %>
+      
+      <%= form_with url: doubly_linked_list_action_path, method: :post, local: true, class: "flex items-center gap-2" do |f| %>
+        <%= f.number_field :value, placeholder: "Eliminar", class: "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 w-24", required: true %>
+        <%= f.hidden_field :action_type, value: "delete" %>
+        <%= f.submit "🗑️ Eliminar", class: "px-4 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors text-sm font-medium" %>
+      <% end %>
+
+      <%= form_with url: doubly_linked_list_action_path, method: :post, local: true, class: "flex items-center gap-2" do |f| %>
+        <%= f.number_field :value, placeholder: "Buscar", class: "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 w-24", required: true %>
+        <%= f.hidden_field :action_type, value: "search" %>
+        <%= f.submit "🔍 Buscar", class: "px-4 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors text-sm font-medium" %>
+      <% end %>
+
+      <%= form_with url: doubly_linked_list_action_path, method: :post, local: true do |f| %>
+        <%= f.hidden_field :action_type, value: "toggle_reverse" %>
+        <%= f.submit "🔄 #{@show_reverse ? 'Vista Normal' : 'Vista Reversa'}", class: "px-4 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors text-sm font-medium" %>
+      <% end %>
+      
+      <%= form_with url: doubly_linked_list_action_path, method: :post, local: true do |f| %>
+        <%= f.hidden_field :action_type, value: "clear" %>
+        <%= f.submit "🧹 Limpiar", class: "px-4 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium" %>
+      <% end %>
+    </div>
+    
+    <!-- Visualization -->
+    <div class="bg-gray-50 p-6 rounded-lg min-h-24">
+      <h3 class="text-lg font-semibold mb-4">Visualización:</h3>
+      <div class="flex items-center gap-3 overflow-x-auto pb-4">
+        <% if @doubly_linked_list.to_array.empty? %>
+          <div class="text-gray-500 italic text-center w-full py-8">Lista vacía</div>
+        <% else %>
+          <div class="flex items-center gap-3">
+            <span class="text-sm text-gray-600 font-medium bg-gray-200 px-2 py-1 rounded">HEAD</span>
+            <% nodes = @show_reverse ? @doubly_linked_list.to_array.reverse : @doubly_linked_list.to_array %>
+            <% nodes.each_with_index do |item, index| %>
+              <div class="flex items-center gap-2">
+                <div class="relative <%= 
+                  if @doubly_linked_list_search && @doubly_linked_list.find(@doubly_linked_list_search) == index
+                    'bg-green-100 border-2 border-green-500 text-green-700 shadow-lg'
+                  else
+                    'bg-purple-100 border-2 border-purple-300 text-purple-700'
+                  end
+                %> rounded-lg px-4 py-3 font-bold text-lg animate-fade-in transition-all hover:shadow-md">
+                  <%= item %>
+                  <!-- Indicadores de enlaces bidireccionales -->
+                  <% unless index == 0 %>
+                    <div class="absolute -top-2 -left-3 text-xs text-gray-400">←</div>
+                  <% end %>
+                  <% unless index == @doubly_linked_list.to_array.length - 1 %>
+                    <div class="absolute -top-2 -right-3 text-xs text-gray-400">→</div>
+                  <% end %>
+                </div>
+                <% unless index == @doubly_linked_list.to_array.length - 1 %>
+                  <div class="flex flex-col items-center">
+                    <div class="text-gray-400 text-sm">→</div>
+                    <div class="text-gray-400 text-sm">←</div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+            <div class="text-gray-400 text-xl">→</div>
+            <span class="text-sm text-gray-600 font-medium bg-gray-200 px-2 py-1 rounded">TAIL</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <!-- Information -->
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+      <div class="bg-purple-50 p-3 rounded-lg">
+        <strong class="text-purple-800">Tamaño:</strong> 
+        <span class="text-purple-600 font-semibold"><%= @doubly_linked_list.size %> elementos</span>
+      </div>
+      <% if @doubly_linked_list_search %>
+        <% found_index = @doubly_linked_list.find(@doubly_linked_list_search) %>
+        <div class="bg-<%= found_index ? 'green' : 'red' %>-50 p-3 rounded-lg">
+          <strong class="text-<%= found_index ? 'green' : 'red' %>-800">Búsqueda (<%= @doubly_linked_list_search %>):</strong>
+          <span class="text-<%= found_index ? 'green' : 'red' %>-600 font-semibold">
+            <%= found_index ? "Posición #{found_index}" : "No encontrado" %>
+          </span>
+        </div>
+      <% end %>
+      <div class="bg-gray-50 p-3 rounded-lg">
+        <strong class="text-gray-800">Navegación:</strong>
+        <span class="text-gray-600">Bidireccional</span>
+      </div>
+    </div>
+  </div>
+</div>

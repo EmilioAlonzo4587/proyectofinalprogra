@@ -1,0 +1,31 @@
+<% if node %>
+  <div class="flex flex-col items-center">
+    <div class="<%= 
+      if search_value && search_value == node.value && search_result == true
+        'bg-green-100 border-2 border-green-500 text-green-700 shadow-lg'
+      else
+        'bg-emerald-100 border-2 border-emerald-300 text-emerald-700'
+      end
+    %> rounded-full w-12 h-12 flex items-center justify-center font-bold text-sm animate-fade-in transition-all hover:shadow-md">
+      <%= node.value %>
+    </div>
+    <% if node.left || node.right %>
+      <div class="flex gap-8 mt-4">
+        <div class="flex flex-col items-center">
+          <% if node.left %>
+            <div class="w-px h-4 bg-gray-300"></div>
+            <div class="w-8 h-px bg-gray-300"></div>
+            <%= render 'tree_node', node: node.left, search_value: search_value, search_result: search_result %>
+          <% end %>
+        </div>
+        <div class="flex flex-col items-center">
+          <% if node.right %>
+            <div class="w-px h-4 bg-gray-300"></div>
+            <div class="w-8 h-px bg-gray-300"></div>
+            <%= render 'tree_node', node: node.right, search_value: search_value, search_result: search_result %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,80 @@
+<div class="space-y-6">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+      📚 Pila (Stack) - LIFO
+    </h2>
+    <p class="text-gray-600 mb-6">
+      Last In, First Out. Los elementos se agregan y remueven desde la parte superior.
+    </p>
+    
+    <!-- Controls -->
+    <div class="flex flex-wrap gap-3 mb-6">
+      <%= form_with url: stack_action_path, method: :post, local: true, class: "flex items-center gap-2" do |f| %>
+        <%= f.number_field :value, placeholder: "Valor", class: "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 w-24", required: true %>
+        <%= f.hidden_field :action_type, value: "push" %>
+        <%= f.submit "⬆️ Push", class: "px-4 py-3 bg-green-300 text-black rounded-md hover:bg-white-700 transition-colors text-sm font-medium" %>
+      <% end %>
+      
+      <%= form_with url: stack_action_path, method: :post, local: true do |f| %>
+        <%= f.hidden_field :action_type, value: "pop" %>
+        <%= f.submit "⬇️ Pop", class: "px-4 py-3 bg-red-200 text-black rounded-md hover:bg-white-700 transition-colors text-sm font-medium #{'opacity-50 cursor-not-allowed' if @stack.empty?}", disabled: @stack.empty? %>
+      <% end %>
+
+      <%= form_with url: stack_action_path, method: :post, local: true do |f| %>
+        <%= f.hidden_field :action_type, value: "peek" %>
+        <%= f.submit "👁️ Peek", class: "px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium #{'opacity-50 cursor-not-allowed' if @stack.empty?}", disabled: @stack.empty? %>
+      <% end %>
+      
+      <%= form_with url: stack_action_path, method: :post, local: true do |f| %>
+        <%= f.hidden_field :action_type, value: "clear" %>
+        <%= f.submit "🧹 Clear", class: "px-4 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm font-medium" %>
+      <% end %>
+    </div>
+    
+    <!-- Visualization -->
+    <div class="bg-gray-50 p-6 rounded-lg min-h-48 flex flex-col items-center justify-end">
+      <% if @stack.to_array.empty? %>
+        <div class="text-gray-500 italic flex-1 flex items-center text-center">Pila vacía</div>
+      <% else %>
+        <div class="flex flex-col-reverse items-center gap-3">
+          <span class="text-sm text-gray-600 font-medium bg-gray-200 px-2 py-1 rounded mb-2">BOTTOM</span>
+          <% @stack.to_array.each_with_index do |item, index| %>
+            <div class="<%= 
+              if index == @stack.to_array.length - 1
+                'bg-green-100 border-2 border-green-500 text-green-700 shadow-lg'
+              else
+                'bg-orange-100 border-2 border-orange-300 text-orange-700'
+              end
+            %> rounded-lg px-6 py-3 font-bold text-lg animate-fade-in transition-all hover:shadow-md min-w-16 text-center">
+              <%= item %>
+              <% if index == @stack.to_array.length - 1 %>
+                <span class="text-green-600 ml-2">⬆️</span>
+              <% end %>
+            </div>
+          <% end %>
+          <span class="text-sm text-gray-600 font-medium bg-green-200 px-2 py-1 rounded mt-2">TOP</span>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- Information -->
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+      <div class="bg-orange-50 p-3 rounded-lg">
+        <strong class="text-orange-800">Tamaño:</strong> 
+        <span class="text-orange-600 font-semibold"><%= @stack.size %> elementos</span>
+      </div>
+      <% unless @stack.empty? %>
+        <div class="bg-green-50 p-3 rounded-lg">
+          <strong class="text-green-800">Top:</strong>
+          <span class="text-green-600 font-semibold"><%= @stack.peek %></span>
+        </div>
+      <% end %>
+      <% if @last_operation %>
+        <div class="bg-blue-50 p-3 rounded-lg">
+          <strong class="text-blue-800">Última operación:</strong>
+          <span class="text-blue-600 font-semibold"><%= @last_operation %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

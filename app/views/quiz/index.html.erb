@@ -1,0 +1,156 @@
+<div class="app-container" data-controller="quiz">
+  <div class="main-content">
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button 
+        class="nav-tab active"
+        data-quiz-target="categoriesTab"
+        data-action="click->quiz#showCategories">
+        Categorías
+      </button>
+      <button 
+        class="nav-tab"
+        data-quiz-target="quizTab"
+        data-action="click->quiz#showQuiz"
+        disabled>
+        Cuestionario
+      </button>
+    </div>
+
+    <!-- Categories View -->
+    <div data-quiz-target="categoriesView" class="categories-grid">
+      <% @categories.each do |category| %>
+        <div class="category-card">
+          <div class="category-header">
+            <h3 class="category-title">
+              <span class="category-icon"><%= category.icon %></span>
+              <%= category.name %>
+            </h3>
+            <p class="category-description"><%= category.description %></p>
+          </div>
+          <div class="category-content">
+            <div class="category-info">
+              <span class="question-count"><%= category.question_count %> preguntas</span>
+              <div class="difficulty-badges">
+                <span class="badge badge-easy">Fácil</span>
+                <span class="badge badge-medium">Medio</span>
+                <span class="badge badge-hard">Difícil</span>
+              </div>
+            </div>
+            <button 
+              class="btn btn-primary btn-full"
+              data-action="click->quiz#startQuiz"
+              data-category-id="<%= category.id %>">
+              Iniciar Cuestionario
+            </button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Quiz View -->
+    <div data-quiz-target="quizView" class="quiz-container hidden">
+      <!-- Quiz Completed View -->
+      <div data-quiz-target="completedView" class="completed-view hidden">
+        <div class="completion-header">
+          <div class="award-icon">🏆</div>
+          <h2 class="completion-title">¡Cuestionario Completado!</h2>
+          <p class="completion-subtitle">Has completado el cuestionario de <span data-quiz-target="categoryName"></span></p>
+        </div>
+
+        <div class="score-section">
+          <h3 class="score-title">Tu puntuación</h3>
+          <div class="final-score" data-quiz-target="finalScore">0 / 0</div>
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress-fill" data-quiz-target="finalProgressBar" style="width: 0%"></div>
+            </div>
+          </div>
+          <p class="score-percentage"><span data-quiz-target="finalPercentage">0</span>% de respuestas correctas</p>
+        </div>
+
+        <div class="evaluation-section">
+          <h3 class="evaluation-title">Evaluación</h3>
+          <span class="evaluation-badge" data-quiz-target="evaluationBadge">-</span>
+          <p class="evaluation-message" data-quiz-target="evaluationMessage">-</p>
+        </div>
+
+        <div class="completion-actions">
+          <button 
+            class="btn btn-primary"
+            data-action="click->quiz#restartQuiz">
+            Volver al inicio
+          </button>
+        </div>
+      </div>
+
+      <!-- Question View -->
+      <div data-quiz-target="questionView" class="question-card">
+        <div class="question-header">
+          <div class="question-meta">
+            <span class="difficulty-badge" data-quiz-target="difficultyBadge">-</span>
+            <span class="type-badge" data-quiz-target="typeBadge">-</span>
+          </div>
+          <div class="question-counter" data-quiz-target="questionCounter">
+            Pregunta 0 de 0
+          </div>
+        </div>
+        
+        <h2 class="question-title" data-quiz-target="questionText">-</h2>
+        
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" data-quiz-target="progressBar" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <div class="question-content">
+          <!-- Code Block (for code completion questions) -->
+          <div data-quiz-target="codeBlock" class="code-block hidden"></div>
+          
+          <!-- Question Options -->
+          <div data-quiz-target="optionsContainer" class="options-container">
+            <!-- Options will be dynamically generated -->
+          </div>
+
+          <!-- Explanation -->
+          <div data-quiz-target="explanationContainer" class="explanation-container hidden">
+            <div class="explanation-content">
+              <div class="explanation-header">
+                <span data-quiz-target="explanationIcon" class="explanation-icon"></span>
+                <h4 class="explanation-title" data-quiz-target="explanationTitle">-</h4>
+              </div>
+              <p class="explanation-text" data-quiz-target="explanationText">-</p>
+              <div data-quiz-target="correctAnswerContainer" class="correct-answer-section hidden">
+                <h5 class="correct-answer-title">Respuesta correcta:</h5>
+                <div data-quiz-target="correctAnswerContent" class="correct-answer-content">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-actions">
+          <button 
+            class="btn btn-secondary"
+            data-action="click->quiz#cancelQuiz">
+            Cancelar
+          </button>
+          <div class="action-buttons">
+            <button 
+              class="btn btn-primary"
+              data-quiz-target="checkButton"
+              data-action="click->quiz#checkAnswer">
+              Verificar
+            </button>
+            <button 
+              class="btn btn-primary hidden"
+              data-quiz-target="nextButton"
+              data-action="click->quiz#nextQuestion">
+              Siguiente
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

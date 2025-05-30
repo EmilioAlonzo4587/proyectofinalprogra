@@ -1,0 +1,194 @@
+<div class="container mx-auto px-6 py-8 max-w-6xl">
+  <!-- Tabs -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="flex border-b">
+      <button data-algorithm-target="mergeSortTab" class="flex-1 py-4 px-6 text-center font-semibold bg-blue-500 text-white transition-colors">
+        <i class="fas fa-code-branch mr-2"></i>
+        Merge Sort
+      </button>
+      <button data-algorithm-target="quickSortTab" class="flex-1 py-4 px-6 text-center font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors">
+        <i class="fas fa-bolt mr-2"></i>
+        Quick Sort
+      </button>
+    </div>
+
+    <!-- Merge Sort Content -->
+    <div data-algorithm-target="mergeSortContent" class="p-6">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-blue-600 mb-2">Merge Sort - Divide y Vencerás</h2>
+        <p class="text-gray-600">Algoritmo de ordenamiento estable que divide el array recursivamente y luego combina los subarrays ordenados</p>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button data-algorithm-target="runMergeSort" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+          <i class="fas fa-play mr-2"></i>Ejecutar
+        </button>
+        <button data-algorithm-target="stepMergeSort" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors" disabled>
+          <i class="fas fa-step-forward mr-2"></i>Siguiente Paso
+        </button>
+        <button data-algorithm-target="resetMergeSort" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+          <i class="fas fa-undo mr-2"></i>Reiniciar
+        </button>
+        <button data-algorithm-target="generateMergeArray" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+          <i class="fas fa-random mr-2"></i>Nuevo Array
+        </button>
+      </div>
+
+      <div class="bg-gray-50 p-6 rounded-lg mb-6">
+        <div data-algorithm-target="mergeArrayContainer" class="flex flex-wrap gap-2 justify-center mb-4">
+          <!-- Array elements will be inserted here -->
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <h3 class="font-semibold mb-3">Estado Actual</h3>
+          <div class="space-y-2 text-sm">
+            <p><strong>Paso:</strong> <span data-algorithm-target="mergeStep">0</span> / <span data-algorithm-target="mergeTotalSteps">0</span></p>
+            <p><strong>Descripción:</strong> <span data-algorithm-target="mergeDescription">Array inicial</span></p>
+            <p><strong>Estado:</strong> <span data-algorithm-target="mergeState">Detenido</span></p>
+          </div>
+        </div>
+
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <h3 class="font-semibold mb-3">Leyenda</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-blue-500 rounded"></div>
+              <span>Elemento Normal</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+              <span>Comparando</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-purple-500 rounded"></div>
+              <span>Combinando (Merge)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-green-500 rounded"></div>
+              <span>Ordenado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 p-4 rounded-lg">
+        <h3 class="font-semibold mb-2">Características del Merge Sort</h3>
+        <ul class="text-sm space-y-1">
+          <li>• <strong>Complejidad temporal:</strong> O(n log n) en todos los casos</li>
+          <li>• <strong>Complejidad espacial:</strong> O(n)</li>
+          <li>• <strong>Estabilidad:</strong> Estable (mantiene el orden relativo)</li>
+          <li>• <strong>Método:</strong> Divide y vencerás</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Quick Sort Content -->
+    <div data-algorithm-target="quickSortContent" class="p-6 hidden">
+      <div class="mb-6">
+        <h2 class="text-2xl font-bold text-red-600 mb-2">Quick Sort - Partición y Recursión</h2>
+        <p class="text-gray-600">Algoritmo de ordenamiento eficiente que usa un pivote para particionar el array</p>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-6">
+        <button data-algorithm-target="runQuickSort" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+          <i class="fas fa-play mr-2"></i>Ejecutar
+        </button>
+        <button data-algorithm-target="stepQuickSort" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors" disabled>
+          <i class="fas fa-step-forward mr-2"></i>Siguiente Paso
+        </button>
+        <button data-algorithm-target="resetQuickSort" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+          <i class="fas fa-undo mr-2"></i>Reiniciar
+        </button>
+        <button data-algorithm-target="generateQuickArray" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+          <i class="fas fa-random mr-2"></i>Nuevo Array
+        </button>
+      </div>
+
+      <div class="bg-gray-50 p-6 rounded-lg mb-6">
+        <div data-algorithm-target="quickArrayContainer" class="flex flex-wrap gap-2 justify-center mb-4">
+          <!-- Array elements will be inserted here -->
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-red-50 p-4 rounded-lg">
+          <h3 class="font-semibold mb-3">Estado Actual</h3>
+          <div class="space-y-2 text-sm">
+            <p><strong>Paso:</strong> <span data-algorithm-target="quickStep">0</span> / <span data-algorithm-target="quickTotalSteps">0</span></p>
+            <p><strong>Descripción:</strong> <span data-algorithm-target="quickDescription">Array inicial</span></p>
+            <p><strong>Estado:</strong> <span data-algorithm-target="quickState">Detenido</span></p>
+        </div>
+      </div>
+
+        <div class="bg-red-50 p-4 rounded-lg">
+          <h3 class="font-semibold mb-3">Leyenda</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-blue-500 rounded"></div>
+              <span>Elemento Normal</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-red-500 rounded"></div>
+              <span>Pivote</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-yellow-500 rounded"></div>
+              <span>Comparando</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-4 h-4 bg-green-500 rounded"></div>
+              <span>Ordenado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-red-50 p-4 rounded-lg">
+        <h3 class="font-semibold mb-2">Características del Quick Sort</h3>
+        <ul class="text-sm space-y-1">
+          <li>• <strong>Complejidad temporal:</strong> O(n log n) promedio, O(n²) peor caso</li>
+          <li>• <strong>Complejidad espacial:</strong> O(log n)</li>
+          <li>• <strong>Estabilidad:</strong> No estable</li>
+          <li>• <strong>Método:</strong> Partición con pivote</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison Section -->
+  <div class="mt-8 bg-gradient-to-r from-blue-50 to-red-50 rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold text-center mb-6">Comparación de Algoritmos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="font-semibold mb-3 text-blue-600 text-lg">
+          <i class="fas fa-code-branch mr-2"></i>Merge Sort
+        </h3>
+        <ul class="space-y-2 text-sm">
+          <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Estable:</strong> Mantiene orden relativo</li>
+          <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Predecible:</strong> Siempre O(n log n)</li>
+          <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Paralelizable:</strong> Fácil de paralelizar</li>
+          <li><i class="fas fa-times text-red-500 mr-2"></i><strong>Memoria:</strong> Requiere O(n) espacio extra</li>
+          <li><i class="fas fa-times text-red-500 mr-2"></i><strong>Cache:</strong> No es cache-friendly</li>
+        </ul>
+      </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="font-semibold mb-3 text-red-600 text-lg">
+          <i class="fas fa-bolt mr-2"></i>Quick Sort
+        </h3>
+        <ul class="space-y-2 text-sm">
+          <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Memoria:</strong> Ordenamiento in-place</li>
+          <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Rápido:</strong> Muy eficiente en promedio</li>
+          <li><i class="fas fa-check text-green-500 mr-2"></i><strong>Cache:</strong> Cache-friendly</li>
+          <li><i class="fas fa-times text-red-500 mr-2"></i><strong>Inestable:</strong> No mantiene orden relativo</li>
+          <li><i class="fas fa-times text-red-500 mr-2"></i><strong>Peor caso:</strong> Puede ser O(n²)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window._defaultArray = <%= raw @default_array.to_json %>;
+</script>
